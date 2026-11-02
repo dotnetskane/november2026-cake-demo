@@ -1,0 +1,25 @@
+trigger:
+  branches:
+    include:
+      - develop
+      - main
+
+pr:
+  branches:
+    include:
+      - '*'
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - checkout: self
+    fetchDepth: 0
+
+  - task: UseDotNet@2
+    displayName: Install .NET SDK (global.json)
+    inputs:
+      useGlobalJson: true
+
+  - script: dotnet cake.cs
+    displayName: Run Cake

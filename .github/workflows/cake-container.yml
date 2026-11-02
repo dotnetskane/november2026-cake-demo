@@ -1,0 +1,21 @@
+name: Build using Cake container
+on:
+  push:
+    branches:
+      - develop
+      - main
+  pull_request:
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the sources
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Run Cake container
+        uses: docker://docker.io/devlead/dotnetskane:latest
+        with:
+          args: --target=GitHubActions
