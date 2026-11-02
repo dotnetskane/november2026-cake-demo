@@ -1,0 +1,26 @@
+name: Build
+on:
+  push:
+    branches:
+      - develop
+      - main
+  pull_request:
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the sources
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Install .NET SDK (global.json)
+        uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+
+      - name: Run Cake
+        uses: cake-build/cake-action@master
+        with:
+          file-path: cake.cs
